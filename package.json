@@ -1,6 +1,6 @@
 {
   "name": "spote-editor",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "description": "A React editor component",
   "license": "MIT",
   "type": "module",
