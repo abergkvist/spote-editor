@@ -5,6 +5,14 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.1](https://github.com/abergkvist/spote-editor/compare/spote-editor-v0.7.0...spote-editor-v0.7.1) (2026-11-02)
+
+
+### Fixed
+
+* emit dist/style.css so spote-editor/styles resolves ([13144c0](https://github.com/abergkvist/spote-editor/commit/13144c0b0813923fc891e5ada4209c411adfe60a))
+* emit dist/style.css so spote-editor/styles resolves ([b922481](https://github.com/abergkvist/spote-editor/commit/b922481d32b0a246ec70ff97a630198c3af7477f))
+
 ## [0.7.0](https://github.com/abergkvist/spote-editor/compare/spote-editor-v0.6.0...spote-editor-v0.7.0) (2026-11-02)
 
 
