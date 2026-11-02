@@ -5,6 +5,20 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.7.0](https://github.com/abergkvist/spote-editor/compare/spote-editor-v0.6.0...spote-editor-v0.7.0) (2026-11-02)
+
+
+### Added
+
+* open links with Cmd/Ctrl+click in both editor modes ([0bceb0a](https://github.com/abergkvist/spote-editor/commit/0bceb0afdb12e70841333a639ca91f05f200408e))
+* open links with Cmd/Ctrl+click in both editor modes ([737fe39](https://github.com/abergkvist/spote-editor/commit/737fe39c19412cf62b83d4e02dcc57ba37e812c9))
+
+
+### Fixed
+
+* **deps:** upgrade mermaid to ^12.2.0 ([c19f6ca](https://github.com/abergkvist/spote-editor/commit/c19f6ca0d27d5cbb6fee96c92f921495e44e0d50))
+* **deps:** upgrade mermaid to ^12.2.0 ([833b806](https://github.com/abergkvist/spote-editor/commit/833b806605f8e89ed498cf3aae472f9e7aef063a))
+
 ## [0.6.0](https://github.com/abergkvist/spote-editor/compare/spote-editor-v0.5.0...spote-editor-v0.6.0) (2026-11-02)
 
 
