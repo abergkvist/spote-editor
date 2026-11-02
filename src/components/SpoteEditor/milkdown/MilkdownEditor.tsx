@@ -17,6 +17,8 @@ import type { MenuPosition } from '../command-core/useCommandMenu'
 import { applyAction } from './applyAction'
 import { createSlashPlugin } from './slashPlugin'
 import { createTaskCheckboxPlugin } from './taskCheckboxPlugin'
+import { createLinkClickPlugin } from './linkClickPlugin'
+import type { OpenLinkHandler } from '../command-core/openLink'
 import { createMermaidPlugin, SET_MERMAID_THEME, RESET_MERMAID_SELECTION } from './mermaidPlugin'
 import type { MermaidTheme } from './mermaidRenderer'
 import { MermaidOverlay } from './MermaidOverlay'
@@ -72,13 +74,14 @@ export interface MilkdownEditorProps {
   requestLink: (position: MenuPosition) => Promise<string | null>
   onUpload?: (file: File) => Promise<string>
   pickImage: () => Promise<File | null>
+  onOpenLink?: OpenLinkHandler
 }
 
 /**
  * Inner component: must live under a {@link MilkdownProvider} so `useEditor` and
  * the `<Milkdown />` mount point share editor context.
  */
-function MilkdownEditorInner({ value, onChange, plugins, readOnly, autoFocus, theme, requestLink, onUpload, pickImage }: MilkdownEditorProps) {
+function MilkdownEditorInner({ value, onChange, plugins, readOnly, autoFocus, theme, requestLink, onUpload, pickImage, onOpenLink }: MilkdownEditorProps) {
   const menu = useCommandMenu(slashPlugins(plugins))
   const [bubble, setBubble] = useState<MenuPosition | null>(null)
   const [zoomSvg, setZoomSvg] = useState<string | null>(null)
@@ -90,6 +93,7 @@ function MilkdownEditorInner({ value, onChange, plugins, readOnly, autoFocus, th
   const readOnlyRef = useRef(readOnly); readOnlyRef.current = readOnly
   const onUploadRef = useRef(onUpload); onUploadRef.current = onUpload
   const pickImageRef = useRef(pickImage); pickImageRef.current = pickImage
+  const onOpenLinkRef = useRef(onOpenLink); onOpenLinkRef.current = onOpenLink
   const themeRef = useRef<MermaidTheme>(theme ?? 'light'); themeRef.current = theme ?? 'light'
   const triggerPosRef = useRef(0)
   // Last markdown we emitted, used to guard the controlled reconcile loop.
@@ -152,6 +156,7 @@ function MilkdownEditorInner({ value, onChange, plugins, readOnly, autoFocus, th
         ),
       )
       .use($prose(() => createTaskCheckboxPlugin()))
+      .use($prose(() => createLinkClickPlugin(() => onOpenLinkRef.current)))
       .use($prose(() => createMermaidPlugin({ initialTheme: themeRef.current, onZoom: setZoomSvg }))),
   )
 

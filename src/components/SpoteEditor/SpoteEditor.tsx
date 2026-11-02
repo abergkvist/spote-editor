@@ -16,7 +16,7 @@ interface PendingLink { position: MenuPosition; resolve: (href: string | null) =
 export function SpoteEditor(props: SpoteEditorProps) {
   const {
     value, onChange, mode: modeProp, defaultMode = 'wysiwyg', onModeChange,
-    onSearchNotes, onResolveNoteHref, plugins = DEFAULTS,
+    onSearchNotes, onResolveNoteHref, onOpenLink, plugins = DEFAULTS,
     readOnly, className, autoFocus, placeholder, onUpload, theme,
   } = props
 
@@ -78,6 +78,7 @@ export function SpoteEditor(props: SpoteEditorProps) {
         requestLink={requestLink}
         onUpload={onUpload}
         pickImage={pickImage}
+        onOpenLink={onOpenLink}
       />
       {pending && (
         <LinkPopover

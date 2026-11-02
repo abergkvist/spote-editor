@@ -5,6 +5,8 @@ import { defaultKeymap, history, historyKeymap } from '@codemirror/commands'
 import { markdown } from '@codemirror/lang-markdown'
 import { wrapOnType } from './wrapOnType'
 import { markKeymap } from './markKeymap'
+import { linkClick } from './linkClick'
+import type { OpenLinkHandler } from '../command-core/openLink'
 import { applyAction } from './applyAction'
 import { slashExtension, removeSlashFragment } from './slashExtension'
 import { CommandMenu } from '../command-core/CommandMenu'
@@ -51,13 +53,15 @@ export interface CodeMirrorEditorProps {
   requestLink: (position: MenuPosition) => Promise<string | null>
   onUpload?: (file: File) => Promise<string>
   pickImage: () => Promise<File | null>
+  onOpenLink?: OpenLinkHandler
 }
 
-export function CodeMirrorEditor({ value, onChange, plugins, readOnly, autoFocus, placeholder, requestLink, onUpload, pickImage }: CodeMirrorEditorProps) {
+export function CodeMirrorEditor({ value, onChange, plugins, readOnly, autoFocus, placeholder, requestLink, onUpload, pickImage, onOpenLink }: CodeMirrorEditorProps) {
   const hostRef = useRef<HTMLDivElement>(null)
   const viewRef = useRef<EditorView | null>(null)
   const triggerPosRef = useRef<number>(0)
   const onUploadRef = useRef(onUpload); onUploadRef.current = onUpload
+  const onOpenLinkRef = useRef(onOpenLink); onOpenLinkRef.current = onOpenLink
   const menu = useCommandMenu(slashPlugins(plugins))
   const [bubble, setBubble] = useState<MenuPosition | null>(null)
 
@@ -75,6 +79,7 @@ export function CodeMirrorEditor({ value, onChange, plugins, readOnly, autoFocus
         markdown(),
         ...(placeholder ? [cmPlaceholder(placeholder)] : []),
         wrapOnType,
+        linkClick(() => onOpenLinkRef.current),
         slashExtension({
           onOpen: (coords, at) => { triggerPosRef.current = at; menuRef.current.openAt(coords) },
           onQuery: (q) => menuRef.current.setQuery(q),
