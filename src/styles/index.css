@@ -35,6 +35,11 @@
 .spote-editor__cm { padding: 12px; }
 .spote-editor__cm .cm-editor { font-family: var(--spote-mono); font-size: 13px; outline: none; }
 
+/* Cmd/Ctrl+click opens a link (any click when read-only). These show when it will. */
+.spote-editor__cm .spote-link-hover { text-decoration: underline; cursor: pointer; }
+.spote-editor__milkdown .ProseMirror.spote-link-ready a,
+.spote-editor__milkdown .ProseMirror[contenteditable='false'] a { cursor: pointer; }
+
 /* GFM task lists. Milkdown is headless: it renders a task item as a bare
    <li data-item-type="task" data-checked="true|false"> and leaves the checkbox
    to the theme, so without these rules the item falls back to an ordinary

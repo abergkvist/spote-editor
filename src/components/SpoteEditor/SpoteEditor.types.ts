@@ -1,5 +1,6 @@
 import type { SpotePlugin } from './command-core/plugin.types'
 import type { ThemePreference } from './useResolvedTheme'
+import type { OpenLinkHandler } from './command-core/openLink'
 
 export type EditorMode = 'wysiwyg' | 'raw'
 
@@ -18,6 +19,12 @@ export interface SpoteEditorProps {
   onModeChange?: (mode: EditorMode) => void
   onSearchNotes?: (query: string) => Promise<NoteHit[]>
   onResolveNoteHref?: (note: NoteHit) => string
+  /**
+   * Called when the user opens a link (Cmd/Ctrl+click, or any click when `readOnly`). Lets the host
+   * route internal links itself. Absent → the link opens in a new tab. Only http(s), mailto and
+   * relative links ever reach it.
+   */
+  onOpenLink?: OpenLinkHandler
   /** Receives a picked/pasted/dropped image file; returns the URL to embed. Absent → image features off. */
   onUpload?: (file: File) => Promise<string>
   plugins?: SpotePlugin[]

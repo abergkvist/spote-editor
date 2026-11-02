@@ -36,6 +36,9 @@ interface SpoteEditorProps {
   onSearchNotes?: (query: string) => Promise<NoteHit[]>
   onResolveNoteHref?: (note: NoteHit) => string        // Return href for a note link
 
+  // Link opening — Cmd/Ctrl+click in both modes (any click when readOnly)
+  onOpenLink?: (href: string, e: MouseEvent) => void   // Route links yourself; default is a new tab
+
   // Image upload — omit to disable image features entirely
   onUpload?: (file: File) => Promise<string>           // Returns the URL to embed
 
@@ -69,6 +72,7 @@ import 'spote-editor/styles'
   onChange={(md) => updateNote(note.id, md)}
   onSearchNotes={(q) => api.searchNotes(q)}
   onResolveNoteHref={(note) => `/notes/${note.id}`}
+  onOpenLink={(href) => (href.startsWith('/') ? router.push(href) : window.open(href, '_blank', 'noopener,noreferrer'))}
   onUpload={(file) => api.uploadImage(file).then((r) => r.url)}
 />
 ```
@@ -138,6 +142,10 @@ field in `package.json` or write `CHANGELOG.md` entries by hand; release-please 
 - Both engines share a single markdown string as source of truth — toggling modes is lossless.
 - Bundle is ~400 kB gzipped (expected given two full editor engines).
 - Tests live next to source files (`*.test.ts` / `*.test.tsx`), run with vitest.
+- Links open on Cmd/Ctrl+click in both engines (and on any click when `readOnly`); a plain
+  click in an editable document just places the cursor. Only `http(s):`, `mailto:` and relative
+  hrefs are ever opened — anything else (`javascript:` …) is ignored. In raw mode the pointer
+  position is matched against `[text](url)` and bare URLs on the line (`linkAtOffset`).
 - ` ```mermaid ` code blocks render as diagrams in WYSIWYG mode. The block stays an
   ordinary fenced code block in the document — the diagram is a ProseMirror node view,
   so markdown round-trip is unaffected and raw markdown mode always shows the plain
