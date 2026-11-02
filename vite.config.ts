@@ -13,6 +13,7 @@ export default defineConfig({
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'SpoteEditor',
       fileName: 'spote-editor',
+      cssFileName: 'style',
       formats: ['es', 'cjs'],
     },
     rollupOptions: {
