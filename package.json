@@ -1,6 +1,10 @@
 {
   "name": "spote-editor",
   "version": "0.6.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abergkvist/spote-editor.git"
+  },
   "description": "A React editor component",
   "license": "MIT",
   "type": "module",
